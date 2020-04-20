@@ -1,0 +1,33 @@
+/*
+A class is a user defined data type, say you need to write a program which keeps tracks of 
+cars, if this were C one could create a struct for each car, but in C++ you can write a class 
+which has private and public members, these members can include pointers, variables, and even functions. 
+These members can be functions or datatypes
+Private members are those which are only visible to the class itself, and cannot be changed outside of 
+the class, an example of this could be a class to hold student information where private members would be 
+the student's Gpa, id number, age and grade these are more specifically called data members
+Member functions for the student class could include dohomework(), write_essay(), eat_lunch() and so on
+*/
+
+//Writing a class
+//classes follow this format
+Class Student       //Class tells complier we are defining our own class (members will be defined within the class scope)
+{
+public:
+
+private:
+
+};
+//To create an object of Class student in main the following command is used, as with all other data types
+Student classmate1; 
+/* Private, Public, and Protected are called access modifiers as they determine which can be accessed from the program
+Private is used the data members since they shouldn't be changed from outside of the class 
+Public is used for member functions, and allows access from anything within the objects scope
+Useful for accessing the private data members, an example would be setters and getters
+These member functions allow for the setting and recieving of private data members 
+public members can be accessed using the . command see the following example*/
+classmate1.dohomework() //would cause the dohomework function to run on the Student Class object classmate1
+/*The protected access modifier is useful for a member which is between public and private, mostly used for inhertiance, 
+Which is the process of reusing some of the code from a previous class for a new class
+An example being manganing a zoo system, if there is a class for big cats which includes most info needed, then when a new 
+cat appears at the zoo, one could inherit from the big cat class and add a few new variables according to the new cat
