@@ -16,7 +16,9 @@ Class Student       //Class tells complier we are defining our own class (member
 public:
 
 private:
-
+double gpa;
+int age;
+string major;
 };
 //To create an object of Class student in main the following command is used, as with all other data types
 Student classmate1; 
@@ -31,3 +33,283 @@ classmate1.dohomework() //would cause the dohomework function to run on the Stud
 Which is the process of reusing some of the code from a previous class for a new class
 An example being manganing a zoo system, if there is a class for big cats which includes most info needed, then when a new 
 cat appears at the zoo, one could inherit from the big cat class and add a few new variables according to the new cat
+
+Member Functions:
+Should be public to change or access the data of private members 
+Scope resolution operator :: is used to define the function elsewhere in the code 
+Class Student
+{
+public:
+void dohomework():
+};
+
+int Student::dohomework()
+{
+if(time == 6)
+{completeassignment()}
+else
+{return}
+}
+
+Constructors:
+Code which defines how to instantate an object of that class, the name of the constructor must be exactly the same as the class
+Doesn't have a return type
+parameterized constructor is a type of constructor which allows for the values to be entered 
+such as Student A(4.0, 18, CompSci)
+
+This pointer:
+Exists for every class, points to the class object itself, accessed using -> operator
+this->gpa = 3.9 would be used instead of gpa = 3.9
+
+Destructors:
+Called when a class is no longer in use, it destroys the class and frees the memory required by that class
+Useful for an enemy class in a game which will be destroyed when the play hits it
+Created by the ~ operator using the same class name as used in the constructor 
+Destructors are called when we use the delete command, otherwise destructor will be called at the end of the program
+Destructors are important to free memory, otherwise the program will run out of memory to use and will crash 
+
+Friend Functions:
+Function which has access to variables and functions of the class it is friended with
+
+
+Abstration: (Data hiding)
+Hiding the bulk of the class from the outside world while only presenting revalent info in order to simplify the program 
+Encapsulation: Allowing the class to be chnaged from the outside using setters and getters while keeping most of 
+the class hidden
+
+Inheritance:
+How a class is able to dervie functions and data members from another class
+Consider a ship, a car, and a plane each one is a vehicle with common data members 
+of make, model, year
+In order to simplfy the amount of coding required, a vehicle class could be created which includes these data members
+as the base class. Then the classes car, ship and airplane could inherit from vehicle and include any new 
+members needed
+Inheritance follows this format:
+class derivedClassName : modeOfInheritance baseClassName
+// Base class 
+class Base {    
+    
+    public: 
+    Base(){
+      cout << "Base class default constructor!" << endl;
+    }
+    // Base class's parameterised constructor     
+    Base(float i) {
+        cout << "Base class parameterized constructor" << endl; 
+    } 
+}; 
+  
+  
+// Derived class 
+class Derived : public Base { 
+    public:  
+    Derived(){
+      cout << "Derived class default constructor!" << endl;
+    }
+  
+    // Derived class's parameterised constructor 
+    Derived(float num): Base(num){ 
+        cout << "Derived class parameterized constructor" << endl; 
+    } 
+    };
+    
+    Using a Private access specifier doesn't allow members of the base class or functions to be accessed in the 
+    derived class or in main
+
+Multiple Inheritance:
+Can inherit from more than one class, just as a telsa class inheriting from both car and vehical class
+//Constructor 
+telsa(string mk, string col, int yr, string mdl, string na, int ts)
+  :Vehicle(mk, col, yr, mdl), Cars(na){
+    top_speed = ts;
+  }
+  
+  Mulitlevel Inhertiance:
+class parent
+ 
+class child : public parent
+ 
+class grandChild : public child
+
+
+Practice on Multiple Level Inhertiance:
+#include <iostream>
+using namespace std;
+
+class Animal
+{
+private:
+  string Name;
+  string Sound;
+
+public:
+  Animal(string n1, string s1)
+  {
+    this->Name = n1;
+    this->Sound = s1;
+  }
+
+  void Animal_Details()
+  {
+    cout << "Animal Name: " << Name << endl; 
+    cout << "Animal Sound: " << Sound << endl;
+  }
+
+};
+class Dogs : public Animal
+{
+private:
+  string family;
+
+public:
+  Dogs(string n2, string s2) : Animal(n2,s2)
+  {
+    //this->Name = n2;
+    //this->Sound = s2;
+    this->family = "Carnivores";
+  }
+
+  void Dog_detail()
+  {
+    Animal_Details();
+    cout << "Dog's Family: " << family << endl << endl;
+  }
+};
+class Sheeps : public Animal 
+{
+private:
+  string Color;
+public:
+  Sheeps(string n3, string s3) : Animal(n3,s3){
+    this->Color = "White";
+  }
+
+  void Sheep_detail()
+  {
+    Animal_Details();
+    cout << "Sheep's Color: " << Color<<endl;
+  }
+};
+int main() {
+Dogs d("Pongo", "Woof Woof");
+d.Dog_detail();
+Sheeps s("Billy", "Baaa Baaa");
+s.Sheep_detail();
+  
+}
+
+Polymorphism:
+Used when a new function is inherited but we want to change the definition of that function 
+A virtual function is a function whos definition is changed by an derived class 
+Pure virtual function has the syntax of =0 which doesn't represent an assignment it is only the syntax
+virtual float getArea() = 0;
+once a pure virtual function is used you must override it in all derived classes otherwise the 
+class will become an abstract class and you wont be able to instantient an object of that class
+
+#include <iostream>
+using namespace std;
+
+Practice using inhertiance and Polymorphism using a bank account set up
+//Account 
+class Account
+{
+protected:
+  float balance;
+
+public:
+  Account()         //constructor
+  {
+    this->balance  = 0.0; 
+  }
+
+  Account(float nbalance) //parameterized constructor 
+  {
+    this->balance = nbalance;
+  }
+
+  virtual void Withdraw(float amount)   //withdraw money from account
+ {
+   this->balance = this->balance - amount; 
+ }
+ virtual void Deposit(float amount)
+ {
+   this->balance = this->balance + amount; 
+}
+
+virtual void printBalance()
+{
+  cout << "Current Balance: " << this->balance << endl; 
+}
+
+};
+
+//Savings account 
+class Savings : public Account 
+{
+private: // member 
+  float interest_rate;// = 0.8
+public:
+Savings(float newbal) : Account(newbal)
+{
+  interest_rate = 0.8;
+}
+
+void Withdraw(float amount) //deducts amount from balance with interest_rate
+{
+  this->balance = this->balance - (amount * (interest_rate + 1));
+}
+void Deposit(float amount)// adds amount in balance with interest_rate
+{
+  this->balance = this->balance + (amount * (interest_rate + 1));
+}
+
+void printBalance() 
+{
+   cout << "Balance in your savings account: " << this->balance << endl; 
+}
+};
+
+
+class Current : public Account{
+public:
+Current(float newbal) : Account(newbal)
+{
+  //nothing needed for Current class
+}
+ void Withdraw(float amount)   //withdraw money from account
+ {
+    this->balance = this->balance - amount; 
+ }
+
+ void Deposit(float amount)
+ {
+   this->balance = this->balance + amount; 
+   }
+
+ void printBalance()
+  {
+    cout << "Balance in your current account: " << this->balance << endl; 
+  }
+};
+
+
+int main() {
+  // make instances of classes here
+  Savings s1(50000);
+  Account * acc = &s1;
+  acc->Deposit(1000);
+  acc->printBalance();
+  
+  acc->Withdraw(3000);
+  acc->printBalance();
+  
+  
+  Current c1(50000);
+  acc = &c1;
+  acc->Deposit(1000);
+  acc->printBalance();
+  
+  acc->Withdraw(3000);
+  acc->printBalance();  
+  return 0;
+}
